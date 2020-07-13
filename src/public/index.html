@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Botkit Anywhere</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+        <script src="https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js"></script>
+        <link rel="stylesheet" href="/css/styles.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body >
+      <div class="wrapper">
+
+        <div id="message_window">
+            <div class="disconnected">
+                Disconnected... reconnecting!
+            </div>
+            <div class="offline">
+                Offline! Reload to reconnect.
+            </div>
+            <div class="powered_by">
+              <img src="https://s3-ap-south-1.amazonaws.com/bot-bkt/prod/38270/38270-McDowells%20New%20logos_123-01%20%281%29.jpg" width="30" height="30" style="border-radius: 50%;" alt="Botkit Logo" />  McDowell's No1 
+            </div>
+            <section class="message-container">
+                <div id="message_list">
+                    <div id="message_template">
+                        <div class="message {{message.type}}">
+                            {{#if message.isTyping}}
+                              <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                              </div>
+                            {{/if}}
+                            {{{message.html}}}
+
+                            {{#if message.open_link}}
+                              <a href="{{{message.open_link}}}" target="_blank" class="button_message">{{#if message.link_title}}{{message.link_title}}{{else}}{{message.open_link}}{{/if}}</a>
+                            {{/if}}
+                        </div>
+                        {{#message.files}}
+                          <div class="file_attachment">
+                          {{#if image}}
+                            <img src="{{{url}}}" alt="{{{url}}}" />
+                          {{else}}
+                            <a href="{{{url}}}" title="{{{url}}}">{{{url}}}</a>
+                          {{/if}}
+                          </div>
+                        {{/message.files}}
+                    </div>
+                </div>
+            </section>
+            <div id="message_replies">
+            </div>
+            <footer>
+                <form onsubmit="Botkit.send(Botkit.input.value, event)">
+                    <input type="text" autocomplete="off" id="messenger_input" placeholder="Write a reply ..." />
+                    <button type="submit"><img src="https://cdn.iconscout.com/icon/free/png-512/telegram-8-599103.png" height="30px"></button>
+                </form>
+            </footer>
+        </div>
+        </div>
+        <script src="/client.js"></script>
+    </body>
+</html>
